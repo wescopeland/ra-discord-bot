@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nx serve",
-    "build": "nx build",
+    "start": "pm2-runtime start dist/apps/bot/main.js",
+    "build": "nx build bot --prod",
     "test": "nx test"
   },
   "private": true,
@@ -12,7 +12,9 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "discord.js": "^14.3.0",
     "reflect-metadata": "^0.1.13",
+    "retroachievements-js": "^1.1.0",
     "rxjs": "^7.0.0",
     "tslib": "^2.3.0"
   },
@@ -35,6 +37,7 @@
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
     "nx": "14.6.3",
+    "pm2": "^5.2.0",
     "prettier": "^2.6.2",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
