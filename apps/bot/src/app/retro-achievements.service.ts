@@ -61,7 +61,20 @@ export class RetroAchievementsService implements OnModuleInit {
           JSON.stringify(userMasteryGameIds)
         );
 
-        return { game, totalMasteryCount: userMasteryGameIds.length };
+        // We need to compute the number of points in the game.
+        const gameStats = await raClient.getExtendedGameInfoByGameId(
+          game.gameId
+        );
+        let totalGamePoints = 0;
+        for (const achievement of gameStats.achievements) {
+          totalGamePoints += achievement.points;
+        }
+
+        return {
+          game,
+          totalGamePoints,
+          totalMasteryCount: userMasteryGameIds.length,
+        };
       }
     }
 

@@ -60,12 +60,14 @@ export class DiscordBotManagerService {
           )} mastery: ${newMastery.game.title} (${
             newMastery.game.consoleName
           }) for ${
-            newMastery.game.maxPossible
+            newMastery.totalGamePoints
           } points! https://retroachievements.org/game/${
             newMastery.game.gameId
           }`
         );
       }
     }
+
+    this.#logger.log('Finished checking for new masteries.');
   }
 }
