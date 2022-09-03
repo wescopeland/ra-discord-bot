@@ -20,4 +20,5 @@ export const leagueMembers: LeagueMember[] = [
   { discordId: '739536437363605576', raUsername: 'wvpinball' },
   { discordId: '196793968665690122', raUsername: 'krehztim' },
   { discordId: '405083527831355412', raUsername: 'DuggerVideoGames' },
+  { discordId: '287810926327889924', raUsername: 'Prow7' },
 ];
