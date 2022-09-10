@@ -50,20 +50,23 @@ export class DiscordBotManagerService {
       );
 
       if (newMastery) {
+        const { rarestAchievement, totalGamePoints, game, totalMasteryCount } =
+          newMastery;
+
         (
           discordClient.channels.cache.get(
             process.env['CHANNEL_ID']
           ) as TextChannel
         ).send(
           `<@${leagueMember.discordId}> has just earned their ${toWordsOrdinal(
-            newMastery.totalMasteryCount
-          )} mastery: ${newMastery.game.title} (${
-            newMastery.game.consoleName
-          }) for ${
-            newMastery.totalGamePoints
-          } points! https://retroachievements.org/game/${
-            newMastery.game.gameId
-          }`
+            totalMasteryCount
+          )} mastery: ${game.title} (${
+            game.consoleName
+          }) for ${totalGamePoints} points! The rarest achievement for this game is "${
+            rarestAchievement.title
+          }" - ${rarestAchievement.description} worth ${
+            rarestAchievement.points
+          } points. https://retroachievements.org/game/${game.gameId}`
         );
       }
     }

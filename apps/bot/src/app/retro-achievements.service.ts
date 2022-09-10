@@ -1,5 +1,5 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { RetroAchievementsClient } from 'retroachievements-js';
+import { Achievement, RetroAchievementsClient } from 'retroachievements-js';
 import { createClient as createRedisClient, RedisClientType } from 'redis';
 
 import { leagueMembers } from './league-members';
@@ -70,9 +70,25 @@ export class RetroAchievementsService implements OnModuleInit {
           totalGamePoints += achievement.points;
         }
 
+        // We need to find the rarest achievement for the game.
+        let rarestAchievement: Achievement | null = null;
+        for (const achievement of gameStats.achievements) {
+          if (!rarestAchievement) {
+            rarestAchievement = achievement;
+            continue;
+          }
+
+          if (
+            (achievement.trueRatio ?? 0) > (rarestAchievement.trueRatio ?? 0)
+          ) {
+            rarestAchievement = achievement;
+          }
+        }
+
         return {
           game,
           totalGamePoints,
+          rarestAchievement,
           totalMasteryCount: userMasteryGameIds.length,
         };
       }
