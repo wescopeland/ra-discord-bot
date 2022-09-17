@@ -63,7 +63,7 @@ export class DiscordBotManagerService {
             totalMasteryCount
           )} mastery: ${game.title} (${
             game.consoleName
-          }) for ${totalGamePoints} points! The most valuable achievement for this game is "${
+          }) for ${totalGamePoints} points! The hardest achievement for this game is "${
             rarestAchievement.title
           }" - ${rarestAchievement.description}, worth ${
             rarestAchievement.points
