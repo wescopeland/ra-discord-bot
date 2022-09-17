@@ -12,11 +12,12 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "dayjs": "^1.11.5",
     "discord.js": "^14.3.0",
     "number-to-words": "^1.2.4",
     "redis": "^4.3.0",
     "reflect-metadata": "^0.1.13",
-    "retroachievements-js": "^1.1.0",
+    "retroachievements-js": "^1.3.2",
     "rxjs": "^7.0.0",
     "tslib": "^2.3.0"
   },

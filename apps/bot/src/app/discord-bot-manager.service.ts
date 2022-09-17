@@ -8,16 +8,17 @@ import { toWordsOrdinal } from 'number-to-words';
 
 import { RetroAchievementsService } from './retro-achievements.service';
 
+import { LeagueService } from './league.service';
 import { leagueMembers } from './league-members';
 
 const THREE_MINUTES = 3 * 60 * 1000;
-const FIVE_MINUTES = 5 * 60 * 1000;
 
 @Injectable()
 export class DiscordBotManagerService {
   #logger = new Logger(DiscordBotManagerService.name);
 
   constructor(
+    private readonly leagueService: LeagueService,
     private readonly retroAchievementsService: RetroAchievementsService
   ) {}
 
@@ -62,9 +63,9 @@ export class DiscordBotManagerService {
             totalMasteryCount
           )} mastery: ${game.title} (${
             game.consoleName
-          }) for ${totalGamePoints} points! The rarest achievement for this game is "${
+          }) for ${totalGamePoints} points! The most valuable achievement for this game is "${
             rarestAchievement.title
-          }" - ${rarestAchievement.description} worth ${
+          }" - ${rarestAchievement.description}, worth ${
             rarestAchievement.points
           } points. https://retroachievements.org/game/${game.gameId}`
         );

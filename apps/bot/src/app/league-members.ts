@@ -1,4 +1,4 @@
-interface LeagueMember {
+export interface LeagueMember {
   discordId: string;
   raUsername: string;
 }
@@ -24,5 +24,5 @@ export const leagueMembers: LeagueMember[] = [
   { discordId: '891952798617456681', raUsername: 'ElBurro' },
   { discordId: '539327871827705857', raUsername: '5pectre' },
   { discordId: '514823024327786530', raUsername: 'QRS666' },
-  { discordId: '511878335790448640', raUsername: 'NWnike' }
+  { discordId: '511878335790448640', raUsername: 'NWnike' },
 ];

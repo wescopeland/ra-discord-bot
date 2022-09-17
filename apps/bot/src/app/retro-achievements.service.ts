@@ -1,6 +1,12 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { Achievement, RetroAchievementsClient } from 'retroachievements-js';
+import {
+  Achievement,
+  DatedAchievement,
+  GameInfoAndUserProgress,
+  RetroAchievementsClient,
+} from 'retroachievements-js';
 import { createClient as createRedisClient, RedisClientType } from 'redis';
+import pLimit from 'p-limit';
 
 import { leagueMembers } from './league-members';
 
@@ -18,6 +24,51 @@ export class RetroAchievementsService implements OnModuleInit {
     this.#redis = createRedisClient({ url: process.env['REDIS_URL'] ?? '' });
     this.#redis.on('error', (err) => console.log('Redis Client Error', err));
     await this.#redis.connect();
+  }
+
+  async fetchUserAchievementsBetweenDates(
+    userName: string,
+    fromDate: Date,
+    toDate: Date
+  ) {
+    const userDatedAchievements =
+      await raClient.getUserAchievementsEarnedBetweenDates(
+        userName,
+        new Date(fromDate),
+        new Date(toDate)
+      );
+
+    const hardcoreOnly = userDatedAchievements.filter(
+      (achievement) => achievement.hardcoreMode === 1
+    );
+
+    return hardcoreOnly;
+  }
+
+  async fetchUserGameProgressFromDatedAchievements(
+    userName: string,
+    datedAchievements: DatedAchievement[]
+  ) {
+    const gameIdsToRetrieve: number[] = [];
+
+    // Fetch all the games in the list.
+    for (const achievement of datedAchievements) {
+      if (!gameIdsToRetrieve.includes(achievement.gameId)) {
+        gameIdsToRetrieve.push(achievement.gameId);
+      }
+    }
+
+    const gameFetchPromises: Promise<GameInfoAndUserProgress>[] = [];
+    const limit = pLimit(10);
+    for (const gameId of gameIdsToRetrieve) {
+      gameFetchPromises.push(
+        limit(() => raClient.getUserProgressForGameId(userName, gameId))
+      );
+    }
+
+    const userGameProgressEntities = await Promise.all(gameFetchPromises);
+
+    return userGameProgressEntities;
   }
 
   async checkForNewMastery(username: string) {
