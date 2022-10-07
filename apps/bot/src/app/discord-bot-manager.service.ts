@@ -39,6 +39,12 @@ export class DiscordBotManagerService {
       }, THREE_MINUTES);
     });
 
+    newDiscordClient.on('messageCreate', async (message) => {
+      if (message.content.startsWith('!ping')) {
+        message.reply('Pong');
+      }
+    });
+
     newDiscordClient.login(process.env['BOT_TOKEN'] ?? '');
   }
 
