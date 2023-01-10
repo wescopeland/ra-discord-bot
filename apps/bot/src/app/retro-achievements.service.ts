@@ -85,7 +85,7 @@ export class RetroAchievementsService implements OnModuleInit {
       username
     );
     const onlyMasteredGames = gameCompletionStats.filter(
-      (stat) => stat.hardcoreMode === 1 && stat.pctWon === 1
+      (stat) => stat.pctWonHc === 1
     );
 
     if (!onlyMasteredGames.length || onlyMasteredGames.length === 0) {
@@ -185,7 +185,7 @@ export class RetroAchievementsService implements OnModuleInit {
       username
     );
     const onlyMasteredGames = gameCompletionStats.filter(
-      (stat) => stat.hardcoreMode === 1 && stat.pctWon === 1
+      (stat) => stat.pctWonHc === 1
     );
 
     return onlyMasteredGames.map((game) => game.gameId);
